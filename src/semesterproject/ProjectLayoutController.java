@@ -112,9 +112,10 @@ public class ProjectLayoutController implements Initializable {
     private Button timeBtn;
 
     /**
-     * printTime is an extension of TimerTask,to keep track of elapsed gametime
+     * printTime extends the Timer task class to increment game time by seconds
+     * and display them in the text Area.
      */
-    class printTime extends TimerTask{
+    public class printTime extends TimerTask{
 
         @Override
         public void run() {
@@ -138,14 +139,14 @@ public class ProjectLayoutController implements Initializable {
     @Override
     /**
      * Method that starts the game automatically when loaded
-     * using parameters in the FXMLLoader class
+     * using parameters in the FXMLLoader class.
      * @throws FileNotFound Exception
      */
     public void initialize(URL url, ResourceBundle rb) {
                 
         try {
             logAction("GAME SESSION INITIALIZE");
-            ShowRandomCard();
+            showRandomCard();
        
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ProjectLayoutController.class.getName()).log(Level.SEVERE, null, ex);
@@ -155,10 +156,10 @@ public class ProjectLayoutController implements Initializable {
 
     /**
      * This method uses the Random class to generate a filename
-     * to match the card files in the image folder
+     * to match the card files in the image folder.
      * @return fileName -Returns the filename of a card image 
      */
-    public String Generate_RandomCard(){
+    public String generateRandomCard(){
         //Generate a random card from the deck
        
         fileName="";
@@ -237,11 +238,11 @@ public class ProjectLayoutController implements Initializable {
     
  
     /**
-     * This method
+     * This method calculates the card value of the card's chosen at random.
      * @param fileName from the Generate_Random_Card method
      * @return a value to use in calculating the solution
      */
-    private int getCardValue(String fileName){
+    public int getCardValue(String fileName){
         
         int temp=0;
         
@@ -300,9 +301,9 @@ public class ProjectLayoutController implements Initializable {
      * ShowRandomCard is a method to display images of 4 random cards
      * @throws FileNotFoundException if filename is wrong
      */
-    private void ShowRandomCard() throws FileNotFoundException{
+    public void showRandomCard() throws FileNotFoundException{
         logAction( "asked for new deck");
-        String file = Generate_RandomCard();
+        String file = generateRandomCard();
         stream = new FileInputStream("src/images/" + file);
         image1 = new Image(stream);
         
@@ -315,9 +316,9 @@ public class ProjectLayoutController implements Initializable {
         // random card we test if the file is equal to the previous cards
         // file name, if so regenerate another card else stream the file
         // show the image to the screen.*/
-        String file2 = Generate_RandomCard();
+        String file2 = generateRandomCard();
         if(file.equals(file2)){
-            file2 = Generate_RandomCard();
+            file2 = generateRandomCard();
         }
         if( file.equals(file2) == false){
             stream2 = new FileInputStream("src/images/"+ file2);
@@ -326,9 +327,9 @@ public class ProjectLayoutController implements Initializable {
         value2 = getCardValue(fileName);
         
         
-        String file3 = Generate_RandomCard();
+        String file3 = generateRandomCard();
         if(file3.equals(file2)|| file3.equals(file)){
-            file3 = Generate_RandomCard();
+            file3 = generateRandomCard();
         }
         
         if(file3.equals(file2) == false || file3.equals(file) == false){
@@ -337,9 +338,9 @@ public class ProjectLayoutController implements Initializable {
         }
         value3 = getCardValue(fileName);     
         
-        String file4 = Generate_RandomCard();
+        String file4 = generateRandomCard();
         if(file4.equals(file3)|| file4.equals(file2) || file4.equals(file)){
-            file4=Generate_RandomCard();
+            file4=generateRandomCard();
         }
         if(file4.equals(file3) == false || file4.equals(file3) == false || file4.equals(file) == false){
             stream4 = new FileInputStream("src/images/" + file4);
@@ -366,7 +367,7 @@ public class ProjectLayoutController implements Initializable {
      * @throws FileNotFoundException if answer is not in the key/
      */
     @FXML
-    private void displaySolution(ActionEvent event) throws FileNotFoundException {
+    public void displaySolution(ActionEvent event) throws FileNotFoundException {
         cheatkey = (Button)event.getSource();
         switch( cheatkey.getText()){
             case "Show Solution":
@@ -415,12 +416,12 @@ public class ProjectLayoutController implements Initializable {
     /**
      * This method starts the game upon program launch, as well as when
      * the user presses the refresh button, showing the random cards and starting the timer
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException if ShowRandomCard fails
      */
     @FXML
-    private void generateNewGame() throws FileNotFoundException{
+    public void generateNewGame() throws FileNotFoundException{
         checkAnswer.clear();
-        ShowRandomCard();
+        showRandomCard();
         answerDisplay.clear();
        
         logAction("generated a new game");
@@ -430,11 +431,11 @@ public class ProjectLayoutController implements Initializable {
      * input the correct answer or not using the JavaScript Engine. Uses
      * objects from the game class, and
      * @param event Clicking the Verify button
-     * @throws FileNotFoundException
-     * @throws ScriptException 
+     * @throws FileNotFoundException if game does not reload correctly
+     * @throws ScriptException if ScriptManager cant interpret the script
      */
     @FXML
-    private void checkAnswer(ActionEvent event) throws FileNotFoundException, ScriptException {
+    public void checkAnswer(ActionEvent event) throws FileNotFoundException, ScriptException {
         
         // game object
         game g = new game();
@@ -529,7 +530,7 @@ public class ProjectLayoutController implements Initializable {
                                 try {
                                     // Resets the game
                                     checkAnswer.clear();
-                                    ShowRandomCard();
+                                    showRandomCard();
                                     answerDisplay.clear();
                                     timer1.cancel();
                                     timer111.clear();
@@ -560,7 +561,7 @@ public class ProjectLayoutController implements Initializable {
      * @param event When the quit button is pressed.
      */
     @FXML
-    private void quitProgram(ActionEvent event) {
+    public void quitProgram(ActionEvent event) {
         
         quit = (Button)event.getSource();
         
@@ -600,11 +601,11 @@ public class ProjectLayoutController implements Initializable {
     }
     
     /**
-     * Starts a new game timer upon Refresh or opening the application
-     * @param event 
+     * This method starts a new game timer upon Refresh or opening the application
+     * @param event Generate New Game
      */
     @FXML
-    void startTime(ActionEvent event) {
+    public void startTime(ActionEvent event) {
         timer1.schedule( new printTime(), 0, 1000);
     }
 
