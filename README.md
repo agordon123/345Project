@@ -1,6 +1,15 @@
 # 345Project
 ## **"24" , produeced by Leonel Barrientos, Adam Gordon, and Bryan Gonzalez, 4/2021**
 ### Release v1.0
+### Part A) Repository information
+This repository contains a Java program using JavaFX libraries to play a math based challenge game. We used special methods on the fxml controller to manipulate images
+to randomly generate pictures of playing cards, and challenge the user to figure out the expression that solves the puzzle. It was our semester project for BCS345 in Spring 2021.
+### Part B) Using the program
+You must have the latest Java SDK kit as well as the JavaFX 2 plugins, and add them to a new library using the menu.
+In order to run the program, you must have a IDE that supports java and javafx, such as netbeans.You must set your classpaths to your local javafx packages on compile,
+and module path on run under the properties, as well was going to VM options and adding --add-modules javafx.controls,javafx.base,javafx.fxml 
+You must do these steps or you won't be able to run the game
+### Part C) Game Tutorial
 Using JavaFX, this program is a Math based challenge game, where 4 cards are displayed, at random.
 Each card has a value, depending on card face, from 1-13(Ace to King).
 The object of the game is to figure out the equation of the 4 values that equals 24, or report No Solution.
